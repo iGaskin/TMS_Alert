@@ -85,28 +85,39 @@
     </header>
 
     <!-- About Section -->
-    <section id="about" class="container content-section text-center">
+    <section id="about" class="container content-section text-center about">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>About TMS Memory</h2>
+                <blockquote>
                 <p>This web application aims to help verse memory with weekly alerts tailored to your current pack of study.  This application is open source, and you can use it for any purpose, personal or commercial.</p>
                 <p>Simply enter your phone number, and prefered Verse Pack below to get started</p>
-                <form>
-                  <div class="form-group">
-                    <label for="InputNumber">Email address</label>
-                    <input type="tel" class="form-control" id="InputNumber" placeholder="Enter Phone Number">
-                  </div>
-                <div class="form-group">
-                  <label for="sel1">Select list:</label>
-                  <select class="form-control" id="sel1">
-                    <option>A-Pack</option>
-                    <option>B-Pack</option>
-                    <option>C-Pack</option>
-                    <option>D-Pack</option>
-                    <option>E-Pack</option>
+              </blockquote>
+
+              <form class="form-horizontal" action="save-user-data.php" method="POST">
+              <fieldset>
+
+              <!-- Phone input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="phoneinput">Phone Number</label>
+                <div class="col-md-4">
+                <input id="phoneinput" name="phoneinput" type="tel" placeholder="XXX-XXX-XXXX" class="form-control input-md">
+                </div>
+              </div>
+
+              <!-- Select Basic -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="selectbasic">TMS Verse Pack</label>
+                <div class="col-md-4">
+                  <select id="verse-options" name="verse-options" class="form-control">
                   </select>
                 </div>
-                </form>
+              </div>
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-default">Submit</button>
+
+              </fieldset>
+              </form>
             </div>
         </div>
     </section>
@@ -120,11 +131,11 @@
                 <p><a href="mailto:gask0032@umn.edu">gask0032@umn.edu</a>
                 </p>
                 <ul class="list-inline banner-social-buttons">
-                    
+
                     <li>
-                        <a href="https://github.com/iGaskin" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                        <a href="https://github.com/iGaskin/TMS_Alert" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                     </li>
-                    
+
                 </ul>
             </div>
         </div>
@@ -134,7 +145,7 @@
     <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <p>Copyright &copy; Your Website 2014</p>
+         <!--    <p>Copyright &copy; Your Website 2014</p> -->
         </div>
     </footer>
 
@@ -147,7 +158,8 @@
     <!-- Plugin JavaScript -->
     <script src="js/jquery.easing.min.js"></script>
 
-    
+    <!-- Custom form JavaScript -->
+    <script src="js/form-loader.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
