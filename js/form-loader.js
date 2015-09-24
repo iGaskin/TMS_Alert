@@ -1,6 +1,11 @@
+/*
+This function servers to populate the dropdown
+of TMS packs to select from
+*/
+
 (function() {
-      // Populate dropdown for Pack selector
-      var verse_select = document.getElementById('verse-options');
+
+      var verse_select = document.getElementById('verse_options');
 
       for (var variable in verse_info_json) {
             var opt = document.createElement('option'); // create new option element
@@ -11,19 +16,67 @@
       }
 })();
 
-// Populate radio buttons for start verse
+
 $(document).ready(function () {
     toggleFields(); //call this first so we start out with the correct visibility depending on the selected form values
     //this will call our toggleFields function every time the selection value of our underAge field changes
-    $("#verse-options").change(function () {
+    $("#verse_options").change(function () {
         toggleFields();
     });
 
+    $('form').submit(function () {
+            $.ajax({
+                url: "php/save-user-data.php",
+                method: "POST",
+                data:{
+                    verse_options: $('#verse_options').val(),
+                    radio: function(){
+                        var radio_buttons = $('[name="radio"]');
+                        for (var i = 0; i<radio_buttons.length; i ++){
+                          if (radio_buttons[i].checked){
+                              console.log(radio_buttons[i].value);
+                              return radio_buttons[i].value;
+                            }
+                        }
+                    },
+                    phone_number: $('#phone_number').val()
+                  },
+                datatype: "json",
+                success: function (status) {
+                    if (status.success === false) {
+                        //alert a failure message
+                        var fail = document.createElement("div");
+                        var fail_strong = document.createElement("strong");
+                        fail.setAttribute("class","alert alert-danger");
+                        fail_strong.innerHTML = "Failed to add to database";
+                        fail.appendChild(fail_strong);
+                        document.getElementById('form-horizontal').appendChild(fail);
+                    } else {
+                        //alert a success message
+                        var div = document.createElement("div");
+                        var strong = document.createElement("strong");
+                        div.setAttribute("class","alert alert-success");
+                        strong.innerHTML = "Successfully added to database";
+                        div.appendChild(strong);
+                        document.getElementById('form-horizontal').appendChild(div);
+
+                    }
+                }
+            });
+            return false;
+        });
+
 });
+
+/*
+This function serves to populate radio buttons
+of verses to select which correspond to the
+currently selected pack.
+*/
 
 function createRadio(verse_key){
   var value_counter = 0;
-  var selected_pack = document.getElementById('selected-pack');
+  var selected_pack = document.getElementById('selected_pack');
   var div = document.createElement("div");
   div.setAttribute("type","col-md-4 radio");
   // clear the radio buttons
@@ -36,7 +89,7 @@ function createRadio(verse_key){
   //          <input type=\"radio\" value=\"'+value_counter+'\" checked=\"checked\"> \
   //          '+verse_referance.join(' - ')+' \
   //    	</div>';
-          console.log(verse_referance_json[verse_key][i]);
+          //console.log(verse_referance_json[verse_key][i]);
            var text = verse_referance_json[verse_key][i].join(' - ');
            var verse_div = document.createElement("div");
            var label = document.createElement("label");
@@ -44,8 +97,9 @@ function createRadio(verse_key){
            //Assign different attributes to the element.
            verse_div.setAttribute("type", "radio");
            element.setAttribute("type", "radio");
-           element.setAttribute("value", value_counter);
            element.setAttribute("name", "radio");
+           element.setAttribute("id", "radio");
+           element.setAttribute("value", value_counter);
 
            label.appendChild(element);
            label.innerHTML += text;
@@ -57,56 +111,39 @@ function createRadio(verse_key){
            div.appendChild(verse_div);
            value_counter++;
 
-          console.log(text + label + value_counter) ;
+          //console.log(text + label + value_counter) ;
   }
 
            selected_pack.appendChild(div);
   return 1;
 }
-
+/*
+A function that servers to handel which radio buttons
+are displayed.
+*/
 function toggleFields() {
-    if ($("#verse-options").val() == 'A'){
+    if ($("#verse_options").val() == 'A'){
         createRadio('A');
-        $("#selected-pack").show();
+        $("#selected_pack").show();
       }
 
-    else if ($("#verse-options").val() == 'B'){
+    else if ($("#verse_options").val() == 'B'){
         createRadio('B');
-        $("#selected-pack").show();
+        $("#selected_pack").show();
       }
-    else if ($("#verse-options").val() == 'C'){
+    else if ($("#verse_options").val() == 'C'){
         createRadio('C');
-        $("#selected-pack").show();
+        $("#selected_pack").show();
       }
-    else if ($("#verse-options").val() == 'D'){
+    else if ($("#verse_options").val() == 'D'){
         createRadio('D');
-        $("#selected-pack").show();
+        $("#selected_pack").show();
 
       }
-    else if ($("#verse-options").val() == 'E'){
+    else if ($("#verse_options").val() == 'E'){
         createRadio('E');
-        $("#selected-pack").show();
+        $("#selected_pack").show();
       }
     else
-        $("#selected-pack").hide();
+        $("#selected_pack").hide();
 }
-
-// TODO make hidden fields visible when select a verse pack
-// <div class="form-group">
-//   <label class="col-md-4 control-label" for="radios">Multiple Radios</label>
-//   <div class="col-md-4">
-//   <div class="radio">
-//     <label for="radios-0">
-//       <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-//       Option one
-//     </label>
-// 	</div>
-//   <div class="radio">
-//     <label for="radios-1">
-//       <input type="radio" name="radios" id="radios-1" value="2">
-//       Option two
-//     </label>
-// 	</div>
-//   </div>
-// </div>
-// TODO set innerHTML of id selected-pack  or just hardcode...

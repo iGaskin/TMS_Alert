@@ -73,8 +73,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">TMS Memory</h1>
-                        <p class="intro-text">Weekly Text alerts to remind you of verses</p>
+                        <h1 class="brand-heading">TMS Alerts</h1>
+                        <p class="intro-text">Weekly SMS alerts to remind you of verses</p>
                         <a href="#about" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
@@ -88,20 +88,20 @@
     <section id="about" class="container content-section text-center about">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>About TMS Memory</h2>
+                <h2>About TMS Alerts</h2>
                 <blockquote>
-                <p>This web application aims to help verse memory with weekly alerts tailored to your current pack of study.  This application is open source, and you can use it for any purpose, personal or commercial.</p>
+                <p>The Topical Memory System (TMS) is a system developed by <a href="https://www.navigators.org/Home">The Navigators</a> to help with the memorization of key verses that point to basic truths.  This web application aims to help verse memory with weekly alerts tailored to your current pack of study.  This application is open source, and can be used for any purpose, personal or commercial.</p>
                 <p>Simply enter your phone number, and prefered Verse Pack below to get started</p>
               </blockquote>
 
-              <form class="form-horizontal" action="save-user-data.php" method="POST">
+              <form class="form-horizontal" id="form-horizontal">
               <fieldset>
 
               <!-- Phone input-->
               <div class="form-group">
-                <label class="col-md-4 control-label" for="phoneinput">Phone Number</label>
+                <label class="col-md-4 control-label" for="phone_number">Phone Number</label>
                 <div class="col-md-4">
-                <input id="phoneinput" name="phoneinput" type="tel" placeholder="XXX-XXX-XXXX" class="form-control input-md">
+                <input id="phone_number" name="phone_number" type="tel" placeholder="XXX-XXX-XXXX" class="form-control input-md">
                 </div>
               </div>
 
@@ -109,10 +109,17 @@
               <div class="form-group">
                 <label class="col-md-4 control-label" for="selectbasic">TMS Verse Pack</label>
                 <div class="col-md-4">
-                  <select id="verse-options" name="verse-options" class="form-control">
+                  <select id="verse_options" name="verse_options" class="form-control">
                   </select>
                 </div>
               </div>
+
+              <!-- Multiple Radios -->
+            <div class="form-group" name="selected_pack" id="selected_pack">
+              <label class="col-md-4 control-label" for="radios" >Start Verse</label>
+              <div class="col-md-4">
+              </div>
+            </div>
               <!-- Submit Button -->
               <button type="submit" class="btn btn-default">Submit</button>
 
@@ -159,7 +166,9 @@
     <script src="js/jquery.easing.min.js"></script>
 
     <!-- Custom form JavaScript -->
+    <script src="js/verse-info.js"></script>
     <script src="js/form-loader.js"></script>
+
 
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
