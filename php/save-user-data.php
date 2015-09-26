@@ -1,5 +1,7 @@
 <?php
 
+require 'send_twilio.php';
+
 // check and sanitize form fields
 // TODO i have selected pack and verse options intuatively reversed...
 $verse_pack_id = isset($_POST['verse_options']) ? $_POST['verse_options'] : '';
@@ -10,14 +12,9 @@ $phone_number = isset($_POST['phone_number']) ? $_POST['phone_number'] : '';
 $phone_number = preg_replace("/[^0-9]/", "", $phone_number);
 
 
-$foo = file_get_contents("php://input");
-
-var_dump(json_decode($foo, true));
-var_dump(json_decode($_POST, true));
- //
-  echo "verse option: " . $verse_pack_id ."\r\n";
-  echo "selected pack: " . $current_verse_id . "\r\n";
-  echo "phone number: " . $phone_number . "\r\n";
+echo "verse option: " . $verse_pack_id ."\r\n";
+echo "selected pack: " . $current_verse_id . "\r\n";
+echo "phone number: " . $phone_number . "\r\n";
 
 // $phone_number     = 4144039465;
 // $verse_pack_id    = "A";
@@ -45,7 +42,30 @@ $mysqli->select_db($db_name) or die('Could not select database');
 
 $values = sprintf("('%s','%s', '%s', '%s' , '%s')",$phone_number, $verse_pack_id, $current_verse_id, $date_added, $version_id);
 
-$result = $mysqli->query((sprintf("insert into user_data (phone_number, verse_pack_id, current_verse_id, date_added, version_id) VALUES".$values)));
+$result = $mysqli->query("insert into user_data (phone_number, verse_pack_id, current_verse_id, date_added, version_id) VALUES ".$values."ON DUPLICATE KEY UPDATE verse_pack_id = VALUES(verse_pack_id), current_verse_id = VALUES(current_verse_id)");
+// check for vailid query
+if (!$result) {
+    die('Invalid query: ' . $mysqli->error);
+}
+// Grab the bible verse
 
+$filename = "../" . $verse_pack_id . "-Pack/" . $verse_pack_id . "-" . $current_verse_id;
+$file = fopen( $filename, "r" );
+
+         if( $file == false )
+         {
+            echo ( "Error in opening file" );
+            exit();
+         }
+
+         $filesize = filesize( $filename );
+         $filetext = fread( $file, $filesize );
+fclose( $file );
+// Send text
+$message = $filetext;
+echo $message;
+//send_twilio($phone_number,$message);
+
+// update database entry
 $mysqli->close();
 ?>

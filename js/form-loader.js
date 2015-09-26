@@ -75,7 +75,7 @@ currently selected pack.
 */
 
 function createRadio(verse_key){
-  var value_counter = 0;
+  var value_counter = 1;
   var selected_pack = document.getElementById('selected_pack');
   var div = document.createElement("div");
   div.setAttribute("type","col-md-4 radio");
