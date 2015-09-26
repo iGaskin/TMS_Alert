@@ -20,7 +20,7 @@ echo "phone number: " . $phone_number . "\r\n";
 // $verse_pack_id    = "A";
 // $current_verse_id = "2";
 $date_added       =  date('Y-m-d');
-$version_id       = "ESV";
+$version_id       = "NIV";
 
 // database credentials
 $db_host='localhost';
@@ -47,24 +47,8 @@ $result = $mysqli->query("insert into user_data (phone_number, verse_pack_id, cu
 if (!$result) {
     die('Invalid query: ' . $mysqli->error);
 }
-// Grab the bible verse
 
-$filename = "../" . $verse_pack_id . "-Pack/" . $verse_pack_id . "-" . $current_verse_id;
-$file = fopen( $filename, "r" );
-
-         if( $file == false )
-         {
-            echo ( "Error in opening file" );
-            exit();
-         }
-
-         $filesize = filesize( $filename );
-         $filetext = fread( $file, $filesize );
-fclose( $file );
-// Send text
-$message = $filetext;
-echo $message;
-//send_twilio($phone_number,$message);
+send_twilio($phone_number);
 
 // update database entry
 $mysqli->close();
