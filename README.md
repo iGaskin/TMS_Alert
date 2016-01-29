@@ -27,3 +27,7 @@ Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [
 =======
 # TMS_Alert
 Web application to send text alerts regarding verse
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/iGaskin/tms_alert/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
